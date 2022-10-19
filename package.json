@@ -1,0 +1,101 @@
+{
+  "name": "tool-utils",
+  "version": "1.0.0",
+  "description": "前端常用工具库",
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "browser": "dist/index.min.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky install",
+    "changelog": "conventional-changelog -p gitmoji-config -i CHANGELOG.md -s -r 0",
+    "prepublishOnly": "npm run build",
+    "postpublish": "npm run clean",
+    "clean": "rm -rf ./dist/ ./es/ ./lib/",
+    "easy:dev": "npm run clean && cross-env NODE_ENV=development rollup -w -c ./build/easy.config.js",
+    "easy:build": "npm run clean && cross-env NODE_ENV=production rollup -c ./build/easy.config.js",
+    "node:dev": "npm run clean && cross-env NODE_ENV=development node ./build/dev.js",
+    "node:build": "npm run clean && cross-env NODE_ENV=development node ./build/build.js",
+    "start": "npm run clean && cross-env NODE_ENV=development rollup -w -c ./build/rollup.config.js",
+    "build": "npm run clean && cross-env NODE_ENV=production rollup -c ./build/rollup.config.js",
+    "format": "prettier --cache --write ./src",
+    "daily": "git add . && npm run commit",
+    "commit": "git-cz",
+    "release:tag": "standard-version --preset gitmoji-config",
+    "push:publish": "npm run build && git push --follow-tags origin master && npm publish",
+    "lint": "eslint --ext .vue,.js,.jsx,.ts,.tsx ./src",
+    "lint:fix": "eslint --ext .vue,.js,.jsx,.ts,.tsx --fix ./src",
+    "lint-staged": "lint-staged"
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-customizable"
+    }
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E $HUSKY_GIT_PARAMS",
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,jsx,vue,ts,tsx}": [
+      "prettier --cache --write ./src",
+      "eslint --ext .vue,.js,.jsx.ts,.tsx --fix ./src",
+      "git add"
+    ]
+  },
+  "files": [
+    "dist",
+    "lib",
+    "es",
+    "types"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/879733672/tool-utils.git"
+  },
+  "keywords": [
+    "rollup",
+    "tool",
+    "js"
+  ],
+  "author": "xiaochengzi <879733672@qq.com>",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.17.9",
+    "@babel/eslint-parser": "^7.17.0",
+    "@babel/plugin-transform-runtime": "^7.17.0",
+    "@babel/preset-env": "^7.16.11",
+    "@commitlint/cli": "^17.0.3",
+    "@commitlint/config-conventional": "^17.0.3",
+    "@commitlint/core": "^17.1.2",
+    "@commitlint/cz-commitlint": "^17.0.3",
+    "commitizen": "^4.2.5",
+    "commitlint-config-cz": "^0.13.3",
+    "commitlint-config-gitmoji": "^2.2.6",
+    "conventional-changelog-cli": "^2.2.2",
+    "conventional-changelog-gitmoji-config": "^1.4.4",
+    "cross-env": "^7.0.3",
+    "cz-customizable": "^7.0.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "husky": "^8.0.1",
+    "lint-staged": "^13.0.3",
+    "prettier": "^2.7.1",
+    "rollup": "^2.70.1",
+    "rollup-plugin-babel": "^4.4.0",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-eslint": "^7.0.0",
+    "rollup-plugin-json": "^4.0.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-serve": "^1.1.0",
+    "rollup-plugin-terser": "^7.0.2",
+    "standard-version": "^9.5.0"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.17.9",
+    "@babel/runtime-corejs2": "^7.17.9",
+    "lodash": "^4.17.21"
+  }
+}
